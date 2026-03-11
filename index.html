@@ -26,10 +26,19 @@
 
 <body>
 
+    <!-- ===================== GLOW DE FONDO ===================== -->
+    <div id="bg-glows" aria-hidden="true">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+        <div class="glow glow-3"></div>
+    </div>
+
     <!-- ===================== PARTÍCULAS ===================== -->
     <div id="particles-container" class="particles-container" aria-hidden="true"></div>
 
     <!-- ===================== NAVBAR ===================== -->
+    <!-- Overlay oscuro para cuando el menú móvil está abierto -->
+    <div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
     <nav class="navbar" id="navbar" role="navigation" aria-label="Navegación principal">
         <div class="container nav-inner">
             <a href="#inicio" class="nav-logo" aria-label="Vivero El Granjero - Inicio">
@@ -38,6 +47,7 @@
             </a>
 
             <ul class="nav-links" id="navLinks" role="list">
+                <li><a href="https://www.canva.com/design/DAG6RmCjLWE/-D-4bU5JUid0M1sN8utV_g/view?utm_content=DAG6RmCjLWE&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h218b5cfd34" class="nav-link nav-link--catalogo" target="_blank" rel="noopener noreferrer">Catálogo</a></li>
                 <li><a href="#inicio" class="nav-link">Inicio</a></li>
                 <li><a href="#servicios" class="nav-link">Servicios</a></li>
                 <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
@@ -72,7 +82,8 @@
                     transformar tu hogar o jardín en un entorno natural, armónico y lleno de vida.
                 </p>
                 <div class="hero-ctas animate-scale-in delay-3">
-                    <a href="#servicios" class="btn btn--primary" id="hero-cta-primary">
+                    <a href="https://www.canva.com/design/DAG6RmCjLWE/-D-4bU5JUid0M1sN8utV_g/view?utm_content=DAG6RmCjLWE&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h218b5cfd34"
+                        class="btn btn--primary" id="hero-cta-primary" target="_blank" rel="noopener noreferrer">
                         Explorar Catálogo
                         <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd"
@@ -122,20 +133,20 @@
             <p class="social-proof__label">Reconectando con lo natural, lo orgánico, aquí es donde inicia todo.</p>
             <div class="logos-track">
                 <div class="logos-slide">
-                    <span class="partner-logo">🌿 Reconexión</span>
-                    <span class="partner-logo">📖 Aprendizaje</span>
-                    <span class="partner-logo">🔗 Conectando con el proceso</span>
-                    <span class="partner-logo">🌍 Descubriendo un nuevo mundo</span>
-                    <span class="partner-logo">💚 Amor por las plantas</span>
-                    <span class="partner-logo">❤️ Amor por la vida</span>
-                    <span class="partner-logo">🪴 Las plantas (tu mejor compañía)</span>
-                    <span class="partner-logo">🌿 Reconexión</span>
-                    <span class="partner-logo">📖 Aprendizaje</span>
-                    <span class="partner-logo">🔗 Conectando con el proceso</span>
-                    <span class="partner-logo">🌍 Descubriendo un nuevo mundo</span>
-                    <span class="partner-logo">💚 Amor por las plantas</span>
-                    <span class="partner-logo">❤️ Amor por la vida</span>
-                    <span class="partner-logo">🪴 Las plantas (tu mejor compañía)</span>
+                    <span class="partner-logo"> Reconexión</span>
+                    <span class="partner-logo"> Aprendizaje</span>
+                    <span class="partner-logo"> Conectando con el proceso</span>
+                    <span class="partner-logo"> Descubriendo un nuevo mundo</span>
+                    <span class="partner-logo"> Amor por las plantas</span>
+                    <span class="partner-logo"> Amor por la vida</span>
+                    <span class="partner-logo">Las plantas (tu mejor compañía)</span>
+                    <span class="partner-logo"> Reconexión</span>
+                    <span class="partner-logo">Aprendizaje</span>
+                    <span class="partner-logo"> Conectando con el proceso</span>
+                    <span class="partner-logo"> Descubriendo un nuevo mundo</span>
+                    <span class="partner-logo">Amor por las plantas</span>
+                    <span class="partner-logo"> Amor por la vida</span>
+                    <span class="partner-logo"> Las plantas (tu mejor compañía)</span>
                 </div>
             </div>
         </div>
@@ -157,15 +168,15 @@
                 <div class="service-card-flip reveal-item" id="service-card-1">
                     <div class="service-card-inner">
                         <div class="service-card-front">
-                            <img src="images/service_card1_new.jpg" alt="Suculentas, Ornamentales, Florales y más"
+                            <img src="images/lugar.png" alt="Suculentas, Ornamentales, Florales y más"
                                 class="service-image" loading="lazy" />
                             <div class="service-overlay">
-                                <div class="service-icon-front">🌿</div>
+                                <div class="service-icon-front"></div>
                                 <h3 class="service-title-front">Suculentas, Ornamentales, Florales y más</h3>
                             </div>
                         </div>
                         <div class="service-card-back">
-                            <div class="service-icon-back">🌿</div>
+                            <div class="service-icon-back"></div>
                             <h3 class="service-title-back">Plantas Ornamentales y Tropicales</h3>
                             <p class="service-description">Más de 200 especies: desde monsteras exóticas hasta palmeras
                                 majestuosas. Plantas de interior, exterior, suculentas, helechos y flores de temporada.
@@ -183,15 +194,13 @@
                 <div class="service-card-flip reveal-item" id="service-card-2">
                     <div class="service-card-inner">
                         <div class="service-card-front">
-                            <img src="images/service_2.png" alt="Sustratos y Tierras Especializadas"
-                                class="service-image" loading="lazy" />
+                            <img src="images/sus (2).png" alt="Sustratos y Tierras Especializadas" class="service-image"
+                                loading="lazy" />
                             <div class="service-overlay">
-                                <div class="service-icon-front">🪴</div>
                                 <h3 class="service-title-front">Sustratos Especializados</h3>
                             </div>
                         </div>
                         <div class="service-card-back">
-                            <div class="service-icon-back">🪴</div>
                             <h3 class="service-title-back">Sustratos Especializados</h3>
                             <p class="service-description">Mezclas profesionales de sustratos: tierra negra, compost
                                 orgánico, perlita, fibra de coco y formulaciones específicas para cada tipo de planta.
@@ -209,16 +218,15 @@
                 <div class="service-card-flip reveal-item" id="service-card-3">
                     <div class="service-card-inner">
                         <div class="service-card-front">
-                            <img src="images/service_3.png" alt="Macetas y Contenedores de Diseño" class="service-image"
-                                loading="lazy" />
-                            <div class="service-overlay">
-                                <div class="service-icon-front">🏺</div>
-                                <h3 class="service-title-front">Macetas y Contenedores</h3>
+                            <div class="service-overlay"
+                                style="justify-content: center; align-items: center; text-align: center;">
+                                <h3 class="service-title-front" style="color: black; font-weight: bold;">PROXIMAMENTE
+                                    MACETAS...</h3>
                             </div>
                         </div>
                         <div class="service-card-back">
-                            <div class="service-icon-back">🏺</div>
-                            <h3 class="service-title-back">Macetas y Contenedores</h3>
+                            <h3 class="service-title-back" style="color: black; font-weight: bold;">PROXIMAMENTE
+                                MACETAS...</h3>
                             <p class="service-description">Amplio catálogo: cerámica artesanal, terracota, plástico
                                 reforzado, concreto decorativo y macetas galvanizadas. Todos los tamaños y estilos.</p>
                             <div class="service-features">
@@ -234,19 +242,17 @@
                 <div class="service-card-flip reveal-item" id="service-card-4">
                     <div class="service-card-inner">
                         <div class="service-card-front">
-                            <img src="images/service_4.png" alt="Asesoría Personalizada en Jardinería"
+                            <img src="images/granjero.png" alt="Asesoría Personalizada en Jardinería"
                                 class="service-image" loading="lazy" />
                             <div class="service-overlay">
-                                <div class="service-icon-front">🧑‍🌾</div>
                                 <h3 class="service-title-front">Asesoría Personalizada</h3>
                             </div>
                         </div>
                         <div class="service-card-back">
-                            <div class="service-icon-back">🧑‍🌾</div>
                             <h3 class="service-title-back">Asesoría Personalizada</h3>
-                            <p class="service-description">Nuestros expertos te guían: selección de plantas según tu
+                            <p class="service-description">Te acompañamos selección de plantas según tu
                                 espacio, iluminación y clima, planes de cuidado y mantenimiento, y diseño básico de
-                                jardines.</p>
+                                tu jardín. Basandonos en la experiencia empirica y el conocimiento teorico
                             <div class="service-features">
                                 <span class="feature-tag">Consulta gratis</span>
                                 <span class="feature-tag">Diagnóstico</span>
@@ -260,15 +266,13 @@
                 <div class="service-card-flip reveal-item" id="service-card-5">
                     <div class="service-card-inner">
                         <div class="service-card-front">
-                            <img src="images/service_5.png" alt="Envíos a San Antonio de Prado" class="service-image"
+                            <img src="images/ENVIOS.png" alt="Envíos a San Antonio de Prado" class="service-image"
                                 loading="lazy" />
                             <div class="service-overlay">
-                                <div class="service-icon-front">🚚</div>
                                 <h3 class="service-title-front">Envíos Locales</h3>
                             </div>
                         </div>
                         <div class="service-card-back">
-                            <div class="service-icon-back">🚚</div>
                             <h3 class="service-title-back">Envíos Locales</h3>
                             <p class="service-description">Realizamos envíos a San Antonio de Prado y sus alrededores.
                                 Próximamente ampliaremos cobertura a todo el Área Metropolitana de Medellín.</p>
@@ -281,31 +285,7 @@
                     </div>
                 </div>
 
-                <!-- Servicio 6 -->
-                <div class="service-card-flip reveal-item" id="service-card-6">
-                    <div class="service-card-inner">
-                        <div class="service-card-front">
-                            <img src="images/service_5.png" alt="Diseño de Espacios Verdes"
-                                class="service-image service-image--alt" loading="lazy" />
-                            <div class="service-overlay">
-                                <div class="service-icon-front">🏡</div>
-                                <h3 class="service-title-front">Diseño de Espacios Verdes</h3>
-                            </div>
-                        </div>
-                        <div class="service-card-back">
-                            <div class="service-icon-back">🏡</div>
-                            <h3 class="service-title-back">Diseño de Espacios Verdes</h3>
-                            <p class="service-description">Transformamos terrazas, jardines, patios y balcones en
-                                entornos naturales. Asesoría en diseño, instalación y mantenimiento de espacios verdes
-                                interiores y exteriores.</p>
-                            <div class="service-features">
-                                <span class="feature-tag">Paisajismo</span>
-                                <span class="feature-tag">Terrazas</span>
-                                <span class="feature-tag">Hogares</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
 
             </div><!-- /.services-grid -->
         </div>
@@ -342,10 +322,10 @@
                     plantas, <em>construimos entornos y experiencias</em>.
                 </p>
                 <div class="about-values">
-                    <div class="value-chip">♻️ Comercio Sostenible</div>
-                    <div class="value-chip">🤝 Asesoría Honesta</div>
-                    <div class="value-chip">🌍 Compromiso Ambiental</div>
-                    <div class="value-chip">📚 Vivero Educativo</div>
+                    <div class="value-chip"> Comercio Sostenible</div>
+                    <div class="value-chip"> Asesoría Honesta</div>
+                    <div class="value-chip"> Compromiso Ambiental</div>
+                    <div class="value-chip"> Vivero Educativo</div>
                 </div>
             </div>
         </div>
@@ -355,17 +335,17 @@
     <section class="metrics section" aria-label="Nuestros números">
         <div class="container metrics-grid">
             <div class="metric-card reveal-item">
-                <span class="metric-icon">🌿</span>
+
                 <span class="metric-number" data-target="200">0</span><span class="metric-plus">+</span>
                 <span class="metric-label">Especies en catálogo</span>
             </div>
             <div class="metric-card reveal-item">
-                <span class="metric-icon">😊</span>
+
                 <span class="metric-number" data-target="350">0</span><span class="metric-plus">+</span>
                 <span class="metric-label">Clientes satisfechos</span>
             </div>
             <div class="metric-card reveal-item">
-                <span class="metric-icon">🏆</span>
+
                 <span class="metric-number" data-target="1">0</span><span class="metric-plus"> año</span>
                 <span class="metric-label">de experiencia</span>
             </div>
@@ -454,9 +434,9 @@
                 </a>
             </div>
             <p class="cta-trust">
-                <span>✅ Más de 350 clientes satisfechos</span>
-                <span>✅ Asesoría sin compromiso</span>
-                <span>✅ Envíos a San Antonio de Prado</span>
+                <span> Más de 350 clientes satisfechos</span>
+                <span> Asesoría sin compromiso</span>
+                <span> Envíos a San Antonio de Prado</span>
             </p>
 
             <!-- Formulario de contacto -->
@@ -464,7 +444,7 @@
                 <h3 class="contact-form-title">Cuéntanos qué necesitas</h3>
                 <p class="contact-form-subtitle">Completa el formulario y te contactamos a la brevedad con una
                     recomendación personalizada.</p>
-                <form id="contact-form" novalidate>
+                <form id="contact-form" novalidate action="https://formspree.io/f/REEMPLAZA_TU_ID" method="POST">
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="contact-name" class="form-label">Nombre</label>
@@ -486,6 +466,11 @@
                             <textarea id="contact-message" name="mensaje" class="form-textarea"
                                 placeholder="Cuéntanos sobre tu espacio, qué tipo de plantas te interesan, si quieres asesoría, envíos…"
                                 required></textarea>
+                        </div>
+                        <!-- Honeypot anti-bots: campo invisible para humanos, visible para bots -->
+                        <div class="form-group form-hp" aria-hidden="true">
+                            <label for="hp-field">No llenar</label>
+                            <input type="text" id="hp-field" name="_gotcha" tabindex="-1" autocomplete="off" />
                         </div>
                         <div class="form-group form-group--full">
                             <button type="submit" class="btn btn--primary form-submit" id="contact-submit">

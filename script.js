@@ -8,10 +8,11 @@
 /* ================================================
    1. DOM REFERENCIAS
    ================================================ */
-const navbar      = document.getElementById('navbar');
-const hamburger   = document.getElementById('hamburger');
-const navLinks    = document.getElementById('navLinks');
-const backToTop   = document.getElementById('backToTop');
+const navbar = document.getElementById('navbar');
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+const navOverlay = document.getElementById('navOverlay');
+const backToTop = document.getElementById('backToTop');
 const particlesCt = document.getElementById('particles-container');
 
 /* ================================================
@@ -59,11 +60,29 @@ window.addEventListener('scroll', onScroll, { passive: true });
 /* ================================================
    4. HAMBURGER MENU
    ================================================ */
+
+// Referencia al contenedor donde vive el menú en desktop
+const navInner = navbar.querySelector('.nav-inner');
+
 hamburger.addEventListener('click', () => {
   const isOpen = navLinks.classList.toggle('open');
   hamburger.classList.toggle('open', isOpen);
   hamburger.setAttribute('aria-expanded', String(isOpen));
   document.body.style.overflow = isOpen ? 'hidden' : '';
+
+  if (isOpen) {
+    // TELEPORTACIÓN: mover navLinks al body para que position:fixed
+    // quede relativo al viewport y no al navbar (que tiene backdrop-filter)
+    document.body.appendChild(navLinks);
+
+    // Mostrar overlay
+    if (navOverlay) {
+      navOverlay.style.display = 'block';
+      requestAnimationFrame(() => navOverlay.classList.add('active'));
+    }
+  } else {
+    closeMenu();
+  }
 });
 
 // Close menu on link click
@@ -71,11 +90,17 @@ navLinks.querySelectorAll('.nav-link').forEach(link => {
   link.addEventListener('click', closeMenu);
 });
 
+// Close menu on overlay click (toca el fondo oscuro para cerrar)
+if (navOverlay) {
+  navOverlay.addEventListener('click', closeMenu);
+}
+
 // Close menu on outside click
 document.addEventListener('click', (e) => {
   if (navLinks.classList.contains('open') &&
-      !navLinks.contains(e.target) &&
-      !hamburger.contains(e.target)) {
+    !navLinks.contains(e.target) &&
+    !hamburger.contains(e.target) &&
+    !navOverlay.contains(e.target)) {
     closeMenu();
   }
 });
@@ -85,6 +110,22 @@ function closeMenu() {
   hamburger.classList.remove('open');
   hamburger.setAttribute('aria-expanded', 'false');
   document.body.style.overflow = '';
+
+  // TELEPORTACIÓN DE VUELTA: devolver navLinks a su lugar dentro del nav
+  // (antes del botón hamburger) para que desktop siga funcionando
+  if (navLinks.parentElement === document.body) {
+    navInner.insertBefore(navLinks, hamburger);
+  }
+
+  // Ocultar overlay con transición
+  if (navOverlay) {
+    navOverlay.classList.remove('active');
+    navOverlay.addEventListener('transitionend', () => {
+      if (!navOverlay.classList.contains('active')) {
+        navOverlay.style.display = 'none';
+      }
+    }, { once: true });
+  }
 }
 
 /* ================================================
@@ -166,7 +207,7 @@ function animateCounter(element, target, duration = 2000, suffix = '') {
 const counterObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      const el     = entry.target;
+      const el = entry.target;
       const target = parseInt(el.dataset.target, 10);
       animateCounter(el, target, 2200);
       counterObserver.unobserve(el);
@@ -225,7 +266,7 @@ document.addEventListener('click', (e) => {
 const heroBg = document.querySelector('.hero-bg-gradient');
 window.addEventListener('mousemove', debounce((e) => {
   if (!heroBg || window.innerWidth < 1024) return;
-  const x = (e.clientX / window.innerWidth  - 0.5) * 20;
+  const x = (e.clientX / window.innerWidth - 0.5) * 20;
   const y = (e.clientY / window.innerHeight - 0.5) * 20;
   heroBg.style.transform = `translate(${x}px, ${y}px)`;
 }, 30));
@@ -280,3 +321,117 @@ function debounce(fn, wait) {
     t = setTimeout(() => fn.apply(this, args), wait);
   };
 }
+
+/* ================================================
+   13. GLOW PARALLAX EN SCROLL
+   ================================================ */
+(function initGlowParallax() {
+  const glow1 = document.querySelector('.glow-1');
+  const glow2 = document.querySelector('.glow-2');
+  const glow3 = document.querySelector('.glow-3');
+  if (!glow1 || !glow2 || !glow3) return;
+
+  // Factores de desplazamiento por glow (más sutil en mobile)
+  const factor = window.innerWidth < 768 ? 0.03 : 0.06;
+
+  window.addEventListener('scroll', debounce(() => {
+    const scrollY = window.scrollY;
+    // Cada mancha se desplaza en dirección y velocidad distinta para dar profundidad
+    glow1.style.transform = `translateY(${scrollY * factor}px) scale(1)`;
+    glow2.style.transform = `translateY(${-scrollY * (factor * 0.7)}px) scale(1)`;
+    glow3.style.transform = `translateY(${scrollY * (factor * 1.2)}px) scale(1)`;
+  }, 16), { passive: true });
+})();
+
+/* ================================================
+   14. FORMULARIO — ANTI-SPAM + FORMSPREE
+   ================================================ */
+(function initContactForm() {
+  const form = document.getElementById('contact-form');
+  const submitBtn = document.getElementById('contact-submit');
+  const honeypot = document.getElementById('hp-field');
+  if (!form) return;
+
+  // Rate-limit: bloquear re-envío durante 30 segundos
+  let lastSent = 0;
+  const COOLDOWN = 30000;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // ── Honeypot: si un bot llenó el campo oculto, salir silenciosamente
+    if (honeypot && honeypot.value.trim() !== '') return;
+
+    // ── Rate-limit básico
+    const now = Date.now();
+    if (now - lastSent < COOLDOWN) {
+      showMsg('⏳ Por favor espera un momento antes de enviar de nuevo.', 'warn');
+      return;
+    }
+
+    // ── Validación HTML5 manual
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    // ── Envío a Formspree
+    submitBtn.disabled = true;
+    submitBtn.textContent = '🌿 Enviando…';
+
+    try {
+      const data = new FormData(form);
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        lastSent = Date.now();
+        form.reset();
+        showMsg('✅ ¡Mensaje enviado! Te contactaremos pronto. 🌱', 'ok');
+      } else {
+        const body = await res.json().catch(() => ({}));
+        const errMsg = body?.errors?.map(e => e.message).join(', ') || 'Error desconocido.';
+        showMsg(`❌ No se pudo enviar: ${errMsg}`, 'err');
+      }
+    } catch (_) {
+      showMsg('❌ Sin conexión. Revisa tu internet e intenta de nuevo.', 'err');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = '🌿 Enviar mensaje';
+    }
+  });
+
+  // Pequeño helper para mostrar mensajes bajo el formulario
+  function showMsg(text, type) {
+    let el = document.getElementById('form-feedback');
+    if (!el) {
+      el = document.createElement('p');
+      el.id = 'form-feedback';
+      el.style.cssText = `
+        margin-top: 14px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        font-family: var(--font-body);
+        text-align: center;
+        padding: 10px 18px;
+        border-radius: 10px;
+        transition: opacity 0.4s ease;
+      `;
+      form.parentElement.appendChild(el);
+    }
+    const colors = {
+      ok: { bg: 'rgba(31,79,46,0.1)', color: '#1F4F2E' },
+      err: { bg: 'rgba(198,90,46,0.1)', color: '#C65A2E' },
+      warn: { bg: 'rgba(127,175,58,0.1)', color: '#5A7A20' },
+    };
+    el.textContent = text;
+    el.style.background = colors[type].bg;
+    el.style.color = colors[type].color;
+    el.style.opacity = '1';
+    // Auto-ocultar tras 6 segundos
+    setTimeout(() => { el.style.opacity = '0'; }, 6000);
+  }
+})();
