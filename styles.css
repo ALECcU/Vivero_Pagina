@@ -1785,7 +1785,7 @@ address {
 .back-to-top {
   position: fixed;
   bottom: 32px;
-  right: 32px;
+  left: 32px;
   width: 48px;
   height: 48px;
   border-radius: var(--radius-pill);
@@ -2144,7 +2144,7 @@ address {
 
   .back-to-top {
     bottom: 22px;
-    right: 22px;
+    left: 22px;
   }
 
   .service-card-flip:hover .service-card-inner {
@@ -2231,4 +2231,52 @@ address {
   outline: 2px solid var(--terra);
   outline-offset: 3px;
   border-radius: 4px;
+}
+
+/* ================================================================
+   FLOATING WHATSAPP BUTTON
+   ================================================================ */
+.floating-wa {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 60px;
+  height: 60px;
+  background-color: #25D366;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  z-index: 1000;
+  box-shadow: 
+    0 4px 12px rgba(0,0,0,0.15),
+    0 0 20px rgba(31, 79, 46, 0.6); /* Dark green glow / brillito verde oscuro */
+  transition: all 0.3s var(--ease-premium);
+}
+
+.floating-wa svg {
+  width: 32px;
+  height: 32px;
+}
+
+.floating-wa:hover {
+  transform: scale(1.08) translateY(-4px);
+  box-shadow: 
+    0 8px 24px rgba(0,0,0,0.2),
+    0 0 32px rgba(31, 79, 46, 0.85); /* Stronger green glow on hover */
+}
+
+@media (max-width: 767px) {
+  .floating-wa {
+    bottom: 22px;
+    right: 22px;
+    width: 54px;
+    height: 54px;
+  }
+  .floating-wa svg {
+    width: 28px;
+    height: 28px;
+  }
 }
